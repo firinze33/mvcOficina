@@ -1,6 +1,8 @@
-﻿using System;
+﻿using MVCOficina.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
 
@@ -11,7 +13,10 @@ namespace MVCOficina.Controllers
         // GET: Clientes
         public ActionResult Index()
         {
-            return View();
+            var Clientes = from e in TodosLosClientes()
+                           orderby e.ID
+                           select e;
+            return View(Clientes);
         }
 
         // GET: Clientes/Details/5
@@ -84,6 +89,28 @@ namespace MVCOficina.Controllers
             {
                 return View();
             }
+        }
+
+        [NonAction]
+        public List<Clientes> TodosLosClientes() {
+            return new List<Clientes>
+        {
+            new Clientes{
+
+                ID = 1,
+                nombre = "Angel",
+                FechaAlta = DateTime.Parse(DateTime.Today.ToString()),
+                edad = 30
+            },
+            new Clientes
+            {
+                ID = 2,
+                nombre = "Patricia",
+                FechaAlta= DateTime.Parse(DateTime.Today.ToString()),
+                edad = 35
+            },
+        };
+        
         }
     }
 }
